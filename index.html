@@ -84,26 +84,6 @@
     const questionText = document.getElementById('questionText');
     const gifImage = document.getElementById('gifImage');
 
-    // ✅ Button size (approx)
-    const btnWidth = 100;
-    const btnHeight = 50;
-
-    // ✅ No button click → move randomly (but stay inside screen)
-    noBtn.addEventListener('click', () => {
-      const newLeft = Math.random() * (window.innerWidth - btnWidth - 20);
-      const newTop = Math.random() * (window.innerHeight - btnHeight - 20);
-      noBtn.style.position = 'absolute';
-      noBtn.style.left = `${newLeft}px`;
-      noBtn.style.top = `${newTop}px`;
-    });
-
-    // ✅ Yes button click → success message + gif
-    yesBtn.addEventListener('click', () => {
-      questionText.textContent = "Yay! ❤️ You said YES! Mera dil khush ho gaya!";
-      gifImage.src = "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif";
-    });
-  </script>
-
-</body>
-</html>
+    // ✅ Button size approx
+    const btnWidt
 
