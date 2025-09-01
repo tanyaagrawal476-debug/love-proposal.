@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Love Proposal 💖</title>
+  <title>Love Proposal 💖</title>
   <style>
     body {
       display: flex;
@@ -68,13 +68,13 @@
 <body>
 
   <div class="container" id="proposalBox">
-    <h1 id="questionText">Kya aap mujhse pyaar karte hain? 😍</h1>
+    <h1 id="questionText">Do you love me? 😍</h1>
     <img id="gifImage" class="image" 
          src="https://media.giphy.com/media/kFgzrTt798d2w/giphy.gif" 
          alt="Cute Teddy" />
     <div class="buttons">
-      <button id="yesBtn" class="btn">Haan 😊</button>
-      <button id="noBtn" class="btn">Nahi 💔</button>
+      <button id="yesBtn" class="btn">Yes 😊</button>
+      <button id="noBtn" class="btn">No 💔</button>
     </div>
   </div>
   
@@ -84,6 +84,32 @@
     const questionText = document.getElementById('questionText');
     const gifImage = document.getElementById('gifImage');
 
-    // ✅ Button size approx
-    const btnWidt
+    const btnWidth = 100;
+    const btnHeight = 50;
+    let firstNoClick = true;
+
+    // ❌ No button event
+    noBtn.addEventListener('click', () => {
+      if (firstNoClick) {
+        questionText.textContent = "Please listen to me... 🥺";
+        gifImage.src = "https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif"; 
+        firstNoClick = false;
+      } else {
+        const newLeft = Math.random() * (window.innerWidth - btnWidth - 40);
+        const newTop = Math.random() * (window.innerHeight - btnHeight - 40);
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = `${newLeft}px`;
+        noBtn.style.top = `${newTop}px`;
+      }
+    });
+
+    // ✅ Yes button event
+    yesBtn.addEventListener('click', () => {
+      questionText.textContent = "Yay! ❤️ You said YES! You made my heart so happy!";
+      gifImage.src = "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif";
+    });
+  </script>
+
+</body>
+</html>
 
