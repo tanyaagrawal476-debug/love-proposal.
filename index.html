@@ -1,118 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Love Proposal 💖</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #fce4ec;
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            overflow: hidden;
-        }
-        .container {
-            padding: 20px;
-            border-radius: 15px;
-            background-color: white;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #d81b60;
-            font-size: 2.5em;
-        }
-        .buttons {
-            margin-top: 20px;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            position: relative;
-        }
-        .btn {
-            padding: 10px 25px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        #yesBtn {
-            background-color: #4caf50;
-            color: white;
-            box-shadow: 0 4px #2e7d32;
-            z-index: 10;
-        }
-        #noBtn {
-            background-color: #f44336;
-            color: white;
-            box-shadow: 0 4px #d32f2f;
-            transition: all 0.5s ease;
-        }
-        .image {
-            margin-top: 20px;
-            width: 250px;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Love Proposal 💖</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #fce4ec;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      overflow: hidden;
+      margin: 0;
+    }
+    .container {
+      padding: 20px;
+      border-radius: 15px;
+      background-color: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+    }
+    h1 {
+      color: #d81b60;
+      font-size: 2em;
+    }
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      position: relative;
+    }
+    .btn {
+      padding: 10px 25px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    #yesBtn {
+      background-color: #4caf50;
+      color: white;
+      box-shadow: 0 4px #2e7d32;
+      z-index: 10;
+    }
+    #noBtn {
+      background-color: #f44336;
+      color: white;
+      box-shadow: 0 4px #d32f2f;
+      position: relative;
+      z-index: 9;
+    }
+    .image {
+      margin-top: 20px;
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container" id="proposalBox">
-        <h1 id="questionText">Kya aap mujhse pyaar karte hain? 😍</h1>
-        <img id="gifImage" class="image" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzVyeDJhb29obzNxdzN4Mnk1cTBlZnE0ZWFnN3VnbXoxeDJzNnZmbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kFgzrTt798d2w/giphy.gif" alt="Cute GIF" />
-        <div class="buttons">
-            <button id="yesBtn" class="btn">Haan 😊</button>
-            <button id="noBtn" class="btn">Nahi 💔</button>
-        </div>
+  <div class="container" id="proposalBox">
+    <h1 id="questionText">Kya aap mujhse pyaar karte hain? 😍</h1>
+    <img id="gifImage" class="image" 
+         src="https://media.giphy.com/media/kFgzrTt798d2w/giphy.gif" 
+         alt="Cute Teddy" />
+    <div class="buttons">
+      <button id="yesBtn" class="btn">Haan 😊</button>
+      <button id="noBtn" class="btn">Nahi 💔</button>
     </div>
-    
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const questionText = document.getElementById('questionText');
-        const gifImage = document.getElementById('gifImage');
-        let noClickCount = 0;
+  </div>
+  
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const questionText = document.getElementById('questionText');
+    const gifImage = document.getElementById('gifImage');
 
-        const funnyMessages = [
-            "Ek baar aur soch lo! 🤔",
-            "Are you sure? 😟",
-            "This isn't a game, it's destiny! 💖",
-            "Please, don't break my heart! 😭",
-            "Really? The whole world is watching... 👀",
-            "You're making a big mistake! 😉",
-            "This is your last chance! 🙏"
-        ];
-
-        const funnyGifs = [
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjR2N25yeW52ZW5pZ2EwbGoxM3d0OHVmdWN0aGNuNG0wYm0xY3Z4MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jA8S2M0qH2z6209q/giphy.gif",
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMm11OHpqYW1tY2pvaWhnb2R4OWVvdG9lNDZ2bHlwbTNkZ2Z4Z2F6ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKB3Eo7z1H9VbC0/giphy.gif",
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXB0Zm4yZGRjZ2s2ZXg0anA5cW05b29nbGwwM2o0c2l3d3pvamZ3NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0O9z9v3aC07j7f7M/giphy.gif",
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2J2N3B3cjlncmtyaWFsdXNxaW96N2N6YXlxdnF2ajF4b3RmdzhmMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YqDk2jY62zT8p4I3rI/giphy.gif",
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzJtOGo2MjZna2g4cW5mb2VwaWl0Zzkwb2VkbW5lYXF2b25kOGV5ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oEdv4NlWkY8YQ3dK0/giphy.gif",
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2F3OXl2cG5ocWJuZ3NlOWVsbGFzNGxwa3h3dWF3YXpobGlsb2JvNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKEeT2i7lq3gDmg/giphy.gif"
-        ];
-
-        noBtn.addEventListener('click', () => {
-            noClickCount++;
-            
-            if (noClickCount <= funnyMessages.length) {
-                // Change message and image but do not move the button
-                questionText.textContent = funnyMessages[noClickCount - 1];
-                gifImage.src = funnyGifs[noClickCount - 1];
-            } else {
-                // After all messages are shown, make the button move randomly
-                noBtn.style.position = 'absolute';
-                const newLeft = Math.random() * (window.innerWidth - 100);
-                const newTop = Math.random() * (window.innerHeight - 100);
-                noBtn.style.left = `${newLeft}px`;
-                noBtn.style.top = `${newTop}px`;
-                
-                questionText.textContent = "Okay, now you have to say YES! There's no escape! 😉";
-                gifImage.src = "
+    // ✅ No button click karte hi idhar-udhar bhagega
+    noBtn.addEventListener('click', () => {
