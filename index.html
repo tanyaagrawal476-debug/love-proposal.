@@ -92,12 +92,12 @@
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
 
-    // Preload images for smooth transitions
+    // Preload images
     [...slides.map(s => s.img), 'https://i.ibb.co/fxPYNKk/sad4.png']
       .forEach(src => { const im = new Image(); im.src = src; });
 
     let i = 0;
-    let evasiveMode = false; // when true, NO button runs away
+    let evasiveMode = false;
 
     yesBtn.addEventListener('click', () => {
       main.innerHTML = successHTML;
@@ -112,20 +112,20 @@
         subtitle.textContent = s.sub;
       } else {
         // Activate evasive behaviour
-        img.src = 'https://i.ibb.co/fxPYNKk/sad4.png';
+        img.src = 'https://media.tenor.com/HOLG_hTN8WsAAAAm/bubu-jumping-on-dudu-happy.webp';
         title.textContent = "Now you can’t say No 😏";
         subtitle.textContent = "Only YES is left 💖";
         enableEvasiveNo();
       }
     });
 
-    // Move the NO button randomly inside the screen
+    // Move NO button randomly after last stage
     function enableEvasiveNo(){
       evasiveMode = true;
-      noBtn.style.position = 'fixed';
+      noBtn.style.position = 'fixed'; // change only now
 
       const jump = () => {
-        const pad = 12; // margin from edges
+        const pad = 12;
         const bw = noBtn.offsetWidth; 
         const bh = noBtn.offsetHeight;
         const x = Math.max(pad, Math.random() * (window.innerWidth - bw - pad));
@@ -134,14 +134,10 @@
         noBtn.style.top = y + 'px';
       };
 
-      // Desktop hover
       noBtn.addEventListener('mouseover', jump);
-      // Mobile tap: move just before finger touches
       noBtn.addEventListener('touchstart', (e)=>{ e.preventDefault(); jump(); }, {passive:false});
-      // Random hop every ~1.5s
       setInterval(jump, 1500);
-
-      jump(); // initial jump
+      jump();
     }
   </script>
 </body>
