@@ -49,7 +49,7 @@
     <h1 id="title">Do you love me? 🥰</h1>
     <p id="subtitle">I am all yours ❤️</p>
 
-    <div class="actions">
+    <div class="actions" id="actionsBox">
       <button id="yesBtn" type="button">Yes</button>
       <button id="noBtn" type="button">No</button>
     </div>
@@ -89,8 +89,9 @@
     const subtitle = document.getElementById('subtitle');
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
+    const actionsBox = document.getElementById('actionsBox');
 
-    [...slides.map(s => s.img), 'https://media.tenor.com/zjBDhwhblFMAAAAm/pinching-cheeks-bubu-angry.webp']
+    [...slides.map(s => s.img), 'https://media.tenor.com/HOLG_hTN8WsAAAAm/bubu-jumping-on-dudu-happy.webp']
       .forEach(src => { const im = new Image(); im.src = src; });
 
     let i = 0;
@@ -114,16 +115,19 @@
           enableEvasiveNo();
         }
       } else {
-        jump(); // अगर evasive mode on है, तो हर tap पर move करे
+        jump(); // सिर्फ़ tap/click पर move करेगा
       }
     });
 
     function enableEvasiveNo(){
       evasiveMode = true;
-      noBtn.style.position = 'fixed'; 
+      // पहले normal जगह पर Yes के बगल में रहेगा
+      noBtn.style.position = 'relative';
     }
 
     function jump(){
+      // अब से ये screen में move करेगा
+      noBtn.style.position = 'fixed';
       const pad = 12;
       const bw = noBtn.offsetWidth; 
       const bh = noBtn.offsetHeight;
@@ -135,4 +139,5 @@
   </script>
 </body>
 </html>
+
 
