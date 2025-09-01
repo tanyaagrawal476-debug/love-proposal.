@@ -44,7 +44,6 @@
 <body>
   <main class="card">
     <div class="img-wrap">
-
       <img id="mainImg" alt="cute" src="https://media.tenor.com/bM7REDRn-BsAAAAm/bubu-dudu-sseeyall.webp" />
     </div>
     <h1 id="title">Do you love me? 🥰</h1>
@@ -58,32 +57,32 @@
   </main>
 
   <script>
-    // Content that shows on successive NO clicks
+    // Messages when NO is clicked
     const slides = [
       {
         img: "https://media.tenor.com/eEf0j_M3z9wAAAAm/bubu-dudu-sseeyall.webp",
         title: "Please think again! 🥺",
-        sub: "Itni jaldi mat bolo… 🥲",
+        sub: "Don't say no so fast… 🥲",
       },
       {
         img: "https://media.tenor.com/wA5xWw0tNBwAAAAm/h%C3%AAh.webp",
-        title: "Ek aur baar soch lo! 😘",
-        sub: "Kyu aisa kar rahe ho 😭",
+        title: "One more chance! 😘",
+        sub: "Why are you being so mean? 😭",
       },
       {
         img: "https://media.tenor.com/aMOxt0o16TQAAAAm/bubu-bubu-dudu.webp",
-        title: "Baby maan jao na! 😍",
-        sub: "Kitna bhav khaogi 😅",
+        title: "Come on baby, say yes! 😍",
+        sub: "Stop playing hard to get 😅",
       },
     ];
 
     // Success screen when YES is clicked
     const successHTML = `
       <div class="img-wrap">
-        <img alt="https://media.tenor.com/wIx44jsp4DMAAAAm/kiss.webp" />
+        <img src="https://media.tenor.com/wIx44jsp4DMAAAAm/kiss.webp" alt="kiss" />
       </div>
       <h1>Yay! I love you too ❤️🥳</h1>
-      <p>Ab toh party banti hai! 🎉</p>
+      <p>Now let’s celebrate our love! 🎉</p>
     `;
 
     const main = document.querySelector('main.card');
@@ -93,8 +92,8 @@
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
 
-    // Preload images for smooth swaps
-    [...slides.map(s => s.img), 'https://i.ibb.co/6XXmjM0/cute-love.png', 'https://i.ibb.co/fxPYNKk/sad4.png']
+    // Preload images for smooth transitions
+    [...slides.map(s => s.img), 'https://i.ibb.co/fxPYNKk/sad4.png']
       .forEach(src => { const im = new Image(); im.src = src; });
 
     let i = 0;
@@ -105,42 +104,46 @@
     });
 
     noBtn.addEventListener('click', () => {
-      if (evasiveMode) return; // once running, clicking will be rare; ignore
+      if (evasiveMode) return; 
       if (i < slides.length) {
         const s = slides[i++];
-        img.src = s.img; title.textContent = s.title; subtitle.textContent = s.sub;
+        img.src = s.img; 
+        title.textContent = s.title; 
+        subtitle.textContent = s.sub;
       } else {
-        // turn on evasive behaviour
+        // Activate evasive behaviour
         img.src = 'https://i.ibb.co/fxPYNKk/sad4.png';
-        title.textContent = "Now you can't say No 😏";
-        subtitle.textContent = "Bas YES hi option bacha hai! 💖";
+        title.textContent = "Now you can’t say No 😏";
+        subtitle.textContent = "Only YES is left 💖";
         enableEvasiveNo();
       }
     });
 
-    // Move the NO button to a random on-screen position
+    // Move the NO button randomly inside the screen
     function enableEvasiveNo(){
       evasiveMode = true;
       noBtn.style.position = 'fixed';
-      // ensure button always stays within viewport
+
       const jump = () => {
         const pad = 12; // margin from edges
-        const bw = noBtn.offsetWidth; const bh = noBtn.offsetHeight;
+        const bw = noBtn.offsetWidth; 
+        const bh = noBtn.offsetHeight;
         const x = Math.max(pad, Math.random() * (window.innerWidth - bw - pad));
         const y = Math.max(pad, Math.random() * (window.innerHeight - bh - pad));
         noBtn.style.left = x + 'px';
         noBtn.style.top = y + 'px';
       };
 
-      const runAway = () => requestAnimationFrame(jump);
-      // desktop hover
-      noBtn.addEventListener('mouseover', runAway);
-      // mobile tap: move just before tap lands
-      noBtn.addEventListener('touchstart', (e)=>{ e.preventDefault(); runAway(); }, {passive:false});
-      // also hop every ~1.5s to tease
+      // Desktop hover
+      noBtn.addEventListener('mouseover', jump);
+      // Mobile tap: move just before finger touches
+      noBtn.addEventListener('touchstart', (e)=>{ e.preventDefault(); jump(); }, {passive:false});
+      // Random hop every ~1.5s
       setInterval(jump, 1500);
-      jump();
+
+      jump(); // initial jump
     }
   </script>
 </body>
 </html>
+
