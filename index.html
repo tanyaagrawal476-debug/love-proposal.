@@ -57,7 +57,6 @@
   </main>
 
   <script>
-    // Messages when NO is clicked
     const slides = [
       {
         img: "https://media.tenor.com/eEf0j_M3z9wAAAAm/bubu-dudu-sseeyall.webp",
@@ -76,7 +75,6 @@
       },
     ];
 
-    // Success screen when YES is clicked
     const successHTML = `
       <div class="img-wrap">
         <img src="https://media.tenor.com/wIx44jsp4DMAAAAm/kiss.webp" alt="kiss" />
@@ -92,8 +90,7 @@
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
 
-    // Preload images
-    [...slides.map(s => s.img), 'https://i.ibb.co/fxPYNKk/sad4.png']
+    [...slides.map(s => s.img), 'https://media.tenor.com/zjBDhwhblFMAAAAm/pinching-cheeks-bubu-angry.webp']
       .forEach(src => { const im = new Image(); im.src = src; });
 
     let i = 0;
@@ -104,40 +101,36 @@
     });
 
     noBtn.addEventListener('click', () => {
-      if (evasiveMode) return; 
-      if (i < slides.length) {
-        const s = slides[i++];
-        img.src = s.img; 
-        title.textContent = s.title; 
-        subtitle.textContent = s.sub;
+      if (!evasiveMode) {
+        if (i < slides.length) {
+          const s = slides[i++];
+          img.src = s.img; 
+          title.textContent = s.title; 
+          subtitle.textContent = s.sub;
+        } else {
+          img.src = 'https://media.tenor.com/HOLG_hTN8WsAAAAm/bubu-jumping-on-dudu-happy.webp';
+          title.textContent = "Now you can’t say No 😏";
+          subtitle.textContent = "Only YES is left 💖";
+          enableEvasiveNo();
+        }
       } else {
-        // Activate evasive behaviour
-        img.src = 'https://media.tenor.com/HOLG_hTN8WsAAAAm/bubu-jumping-on-dudu-happy.webp';
-        title.textContent = "Now you can’t say No 😏";
-        subtitle.textContent = "Only YES is left 💖";
-        enableEvasiveNo();
+        jump(); // अगर evasive mode on है, तो हर tap पर move करे
       }
     });
 
-    // Move NO button randomly after last stage
     function enableEvasiveNo(){
       evasiveMode = true;
-      noBtn.style.position = 'fixed'; // change only now
+      noBtn.style.position = 'fixed'; 
+    }
 
-      const jump = () => {
-        const pad = 12;
-        const bw = noBtn.offsetWidth; 
-        const bh = noBtn.offsetHeight;
-        const x = Math.max(pad, Math.random() * (window.innerWidth - bw - pad));
-        const y = Math.max(pad, Math.random() * (window.innerHeight - bh - pad));
-        noBtn.style.left = x + 'px';
-        noBtn.style.top = y + 'px';
-      };
-
-      noBtn.addEventListener('mouseover', jump);
-      noBtn.addEventListener('touchstart', (e)=>{ e.preventDefault(); jump(); }, {passive:false});
-      setInterval(jump, 1500);
-      jump();
+    function jump(){
+      const pad = 12;
+      const bw = noBtn.offsetWidth; 
+      const bh = noBtn.offsetHeight;
+      const x = Math.max(pad, Math.random() * (window.innerWidth - bw - pad));
+      const y = Math.max(pad, Math.random() * (window.innerHeight - bh - pad));
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
     }
   </script>
 </body>
