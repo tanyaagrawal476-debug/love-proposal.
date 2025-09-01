@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Do you love me? ❤️</title>
+  <style>
+    :root{
+      --bg:#ffd6e7;
+      --card:#ffffff;
+      --text:#222;
+      --muted:#6b7280;
+      --yes:#b5f5b5;
+      --no:#ffb6c1;
+      --shadow: 0 10px 30px rgba(0,0,0,.15);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0; display:grid; place-items:center; background:var(--bg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      color:var(--text); overflow:hidden;
+    }
+    .card{
+      width:min(92vw, 480px); background:var(--card); border-radius:24px; padding:28px 24px 32px;
+      text-align:center; box-shadow:var(--shadow);
+    }
+    .img-wrap{ display:grid; place-items:center; margin-bottom:16px;}
+    img{ width:min(60vw, 220px); border-radius:16px; user-select:none; -webkit-user-drag:none; }
+    h1{ font-size:clamp(20px, 4vw, 28px); margin:6px 0 4px;}
+    p{ margin:0; color:var(--muted)}
+    .actions{ margin-top:18px; display:flex; gap:12px; justify-content:center; position:relative;}
+    button{
+      appearance:none; border:0; padding:12px 20px; border-radius:12px; font-size:16px; cursor:pointer;
+      box-shadow: 0 6px 16px rgba(0,0,0,.12); transition: transform .08s ease, box-shadow .2s ease;
+      position:relative; touch-action:manipulation; user-select:none;
+    }
+    button:active{ transform:translateY(1px); box-shadow: 0 4px 10px rgba(0,0,0,.15) }
+    #yesBtn{ background:var(--yes) }
+    #noBtn{ background:var(--no) }
+    .tiny{font-size:12px; margin-top:8px; color:var(--muted)}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="img-wrap">
+      <img id="mainImg" alt="cute" src="https://i.ibb.co/mS2Zs0L/cute-cat.png" />
+    </div>
+    <h1 id="title">Do you love me? 🥰</h1>
+    <p id="subtitle">I am all yours ❤️</p>
+
+    <div class="actions">
+      <button id="yesBtn" type="button">Yes</button>
+      <button id="noBtn" type="button">No</button>
+    </div>
+    <div class="tiny">Made with ❤ just for you</div>
+  </main>
+
+  <script>
+    // Content that shows on successive NO clicks
+    const slides = [
+      {
+        img: "https://i.ibb.co/X53BZQJ/sad1.png",
+        title: "Please think again! 🥺",
+        sub: "Itni jaldi mat bolo… 🥲",
+      },
+      {
+        img: "https://i.ibb.co/zfWs72h/sad2.png",
+        title: "Ek aur baar soch lo! 😘",
+        sub: "Kyu aisa kar rahe ho 😭",
+      },
+      {
+        img: "https://i.ibb.co/D79tWn9/sad3.png",
+        title: "Baby maan jao na! 😍",
+        sub: "Kitna bhav khaogi 😅",
+      },
+    ];
+
+    // Success screen when YES is clicked
+    const successHTML = `
+      <div class="img-wrap">
+        <img alt="love" src="https://i.ibb.co/6XXmjM0/cute-love.png" />
+      </div>
+      <h1>Yay! I love you too ❤️🥳</h1>
+      <p>Ab toh party banti hai! 🎉</p>
+    `;
+
+    const main = document.querySelector('main.card');
+    const img = document.getElementById('mainImg');
+    const title = document.getElementById('title');
+    const subtitle = document.getElementById('subtitle');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+
+    // Preload images for smooth swaps
+    [...slides.map(s => s.img), 'https://i.ibb.co/6XXmjM0/cute-love.png', 'https://i.ibb.co/fxPYNKk/sad4.png']
+      .forEach(src => { const im = new Image(); im.src = src; });
+
+    let i = 0;
+    let evasiveMode = false; // when true, NO button runs away
+
+    yesBtn.addEventListener('click', () => {
+      main.innerHTML = successHTML;
+    });
+
+    noBtn.addEventListener('click', () => {
+      if (evasiveMode) return; // once running, clicking will be rare; ignore
+      if (i < slides.length) {
+        const s = slides[i++];
+        img.src = s.img; title.textContent = s.title; subtitle.textContent = s.sub;
+      } else {
+        // turn on evasive behaviour
+        img.src = 'https://i.ibb.co/fxPYNKk/sad4.png';
+        title.textContent = "Now you can't say No 😏";
+        subtitle.textContent = "Bas YES hi option bacha hai! 💖";
+        enableEvasiveNo();
+      }
+    });
+
+    // Move the NO button to a random on-screen position
+    function enableEvasiveNo(){
+      evasiveMode = true;
+      noBtn.style.position = 'fixed';
+      // ensure button always stays within viewport
+      const jump = () => {
+        const pad = 12; // margin from edges
+        const bw = noBtn.offsetWidth; const bh = noBtn.offsetHeight;
+        const x = Math.max(pad, Math.random() * (window.innerWidth - bw - pad));
+        const y = Math.max(pad, Math.random() * (window.innerHeight - bh - pad));
+        noBtn.style.left = x + 'px';
+        noBtn.style.top = y + 'px';
+      };
+
+      const runAway = () => requestAnimationFrame(jump);
+      // desktop hover
+      noBtn.addEventListener('mouseover', runAway);
+      // mobile tap: move just before tap lands
+      noBtn.addEventListener('touchstart', (e)=>{ e.preventDefault(); runAway(); }, {passive:false});
+      // also hop every ~1.5s to tease
+      setInterval(jump, 1500);
+      jump();
+    }
+  </script>
+</body>
+</html>
