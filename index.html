@@ -14,7 +14,7 @@
             background-color: #fce4ec;
             font-family: 'Arial', sans-serif;
             text-align: center;
-            overflow: hidden; /* Prevent scrollbars from appearing when button moves */
+            overflow: hidden;
         }
         .container {
             padding: 20px;
@@ -45,11 +45,13 @@
             background-color: #4caf50;
             color: white;
             box-shadow: 0 4px #2e7d32;
+            z-index: 10;
         }
         #noBtn {
             background-color: #f44336;
             color: white;
             box-shadow: 0 4px #d32f2f;
+            transition: all 0.5s ease;
         }
         .image {
             margin-top: 20px;
@@ -57,9 +59,6 @@
             height: 250px;
             object-fit: cover;
             border-radius: 10px;
-        }
-        .hidden {
-            display: none;
         }
     </style>
 </head>
@@ -103,15 +102,15 @@
         noBtn.addEventListener('click', () => {
             noClickCount++;
             
-            if (noClickCount < funnyMessages.length) {
-                // Change message and image
+            if (noClickCount <= funnyMessages.length) {
+                // Change message and image but don't move the button
                 questionText.textContent = funnyMessages[noClickCount - 1];
                 gifImage.src = funnyGifs[noClickCount - 1];
             } else {
-                // Hide the "No" button or make it move
+                // When all messages are shown, make the button move
+                noBtn.style.position = 'absolute';
                 const newLeft = Math.random() * (window.innerWidth - 100);
                 const newTop = Math.random() * (window.innerHeight - 100);
-                noBtn.style.position = 'absolute';
                 noBtn.style.left = `${newLeft}px`;
                 noBtn.style.top = `${newTop}px`;
                 
@@ -123,8 +122,8 @@
         yesBtn.addEventListener('click', () => {
             questionText.textContent = "Aww, I knew it! I love you too! ❤️";
             gifImage.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbm04c211ZzB6bWhzM2FhMXVpa3d2eWdwN2VzM2FvNnUzbG84eXRmeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l2SpL9g9z5S2hT5v2/giphy.gif";
-            noBtn.style.display = 'none'; // Hide the no button
-            yesBtn.style.background = '#d81b60'; // Change color
+            noBtn.style.display = 'none';
+            yesBtn.style.background = '#d81b60';
             yesBtn.style.boxShadow = '0 4px #ad1457';
             yesBtn.style.cursor = 'default';
         });
