@@ -1,115 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Love Proposal 💖</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Do you love me? ❤️</title>
   <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #fce4ec;
-      font-family: 'Arial', sans-serif;
-      text-align: center;
-      overflow: hidden;
-      margin: 0;
+    :root{
+      --bg:#ffd6e7;
+      --card:#ffffff;
+      --text:#222;
+      --muted:#6b7280;
+      --yes:#b5f5b5;
+      --no:#ffb6c1;
+      --shadow: 0 10px 30px rgba(0,0,0,.15);
     }
-    .container {
-      padding: 20px;
-      border-radius: 15px;
-      background-color: white;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      max-width: 400px;
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0; display:grid; place-items:center; background:var(--bg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      color:var(--text); overflow:hidden;
     }
-    h1 {
-      color: #d81b60;
-      font-size: 2em;
+    .card{
+      width:min(92vw, 480px); background:var(--card); border-radius:24px; padding:28px 24px 32px;
+      text-align:center; box-shadow:var(--shadow);
     }
-    .buttons {
-      margin-top: 20px;
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      position: relative;
+    .img-wrap{ display:grid; place-items:center; margin-bottom:16px;}
+    img{ width:min(60vw, 220px); border-radius:16px; user-select:none; -webkit-user-drag:none; }
+    h1{ font-size:clamp(20px, 4vw, 28px); margin:6px 0 4px;}
+    p{ margin:0; color:var(--muted)}
+    .actions{ margin-top:18px; display:flex; gap:12px; justify-content:center; position:relative;}
+    button{
+      appearance:none; border:0; padding:12px 20px; border-radius:12px; font-size:16px; cursor:pointer;
+      box-shadow: 0 6px 16px rgba(0,0,0,.12); transition: transform .08s ease, box-shadow .2s ease;
+      position:relative; touch-action:manipulation; user-select:none;
     }
-    .btn {
-      padding: 10px 25px;
-      border: none;
-      border-radius: 50px;
-      font-size: 1.2em;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    #yesBtn {
-      background-color: #4caf50;
-      color: white;
-      box-shadow: 0 4px #2e7d32;
-      z-index: 10;
-    }
-    #noBtn {
-      background-color: #f44336;
-      color: white;
-      box-shadow: 0 4px #d32f2f;
-      position: relative;
-      z-index: 9;
-    }
-    .image {
-      margin-top: 20px;
-      width: 250px;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
+    button:active{ transform:translateY(1px); box-shadow: 0 4px 10px rgba(0,0,0,.15) }
+    #yesBtn{ background:var(--yes) }
+    #noBtn{ background:var(--no) }
+    .tiny{font-size:12px; margin-top:8px; color:var(--muted)}
   </style>
 </head>
 <body>
+  <main class="card">
+    <div class="img-wrap">
 
-  <div class="container" id="proposalBox">
-    <h1 id="questionText">Do you love me? 😍</h1>
-    <img id="gifImage" class="image" 
-         src="https://media.giphy.com/media/kFgzrTt798d2w/giphy.gif" 
-         alt="Cute Teddy" />
-    <div class="buttons">
-      <button id="yesBtn" class="btn">Yes 😊</button>
-      <button id="noBtn" class="btn">No 💔</button>
+      <img id="mainImg" alt="cute" src="https://media.tenor.com/bM7REDRn-BsAAAAm/bubu-dudu-sseeyall.webp" />
     </div>
-  </div>
-  
+    <h1 id="title">Do you love me? 🥰</h1>
+    <p id="subtitle">I am all yours ❤️</p>
+
+    <div class="actions">
+      <button id="yesBtn" type="button">Yes</button>
+      <button id="noBtn" type="button">No</button>
+    </div>
+    <div class="tiny">Made with ❤ just for you</div>
+  </main>
+
   <script>
-    const noBtn = document.getElementById('noBtn');
+    // Content that shows on successive NO clicks
+    const slides = [
+      {
+        img: "https://media.tenor.com/eEf0j_M3z9wAAAAm/bubu-dudu-sseeyall.webp",
+        title: "Please think again! 🥺",
+        sub: "Itni jaldi mat bolo… 🥲",
+      },
+      {
+        img: "https://media.tenor.com/wA5xWw0tNBwAAAAm/h%C3%AAh.webp",
+        title: "Ek aur baar soch lo! 😘",
+        sub: "Kyu aisa kar rahe ho 😭",
+      },
+      {
+        img: "https://media.tenor.com/aMOxt0o16TQAAAAm/bubu-bubu-dudu.webp",
+        title: "Baby maan jao na! 😍",
+        sub: "Kitna bhav khaogi 😅",
+      },
+    ];
+
+    // Success screen when YES is clicked
+    const successHTML = `
+      <div class="img-wrap">
+        <img alt="https://media.tenor.com/wIx44jsp4DMAAAAm/kiss.webp" />
+      </div>
+      <h1>Yay! I love you too ❤️🥳</h1>
+      <p>Ab toh party banti hai! 🎉</p>
+    `;
+
+    const main = document.querySelector('main.card');
+    const img = document.getElementById('mainImg');
+    const title = document.getElementById('title');
+    const subtitle = document.getElementById('subtitle');
     const yesBtn = document.getElementById('yesBtn');
-    const questionText = document.getElementById('questionText');
-    const gifImage = document.getElementById('gifImage');
+    const noBtn = document.getElementById('noBtn');
 
-    const btnWidth = 100;
-    const btnHeight = 50;
-    let firstNoClick = true;
+    // Preload images for smooth swaps
+    [...slides.map(s => s.img), 'https://i.ibb.co/6XXmjM0/cute-love.png', 'https://i.ibb.co/fxPYNKk/sad4.png']
+      .forEach(src => { const im = new Image(); im.src = src; });
 
-    // ❌ No button event
+    let i = 0;
+    let evasiveMode = false; // when true, NO button runs away
+
+    yesBtn.addEventListener('click', () => {
+      main.innerHTML = successHTML;
+    });
+
     noBtn.addEventListener('click', () => {
-      if (firstNoClick) {
-        questionText.textContent = "Please listen to me... 🥺";
-        gifImage.src = "https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif"; 
-        firstNoClick = false;
+      if (evasiveMode) return; // once running, clicking will be rare; ignore
+      if (i < slides.length) {
+        const s = slides[i++];
+        img.src = s.img; title.textContent = s.title; subtitle.textContent = s.sub;
       } else {
-        const newLeft = Math.random() * (window.innerWidth - btnWidth - 40);
-        const newTop = Math.random() * (window.innerHeight - btnHeight - 40);
-        noBtn.style.position = 'absolute';
-        noBtn.style.left = `${newLeft}px`;
-        noBtn.style.top = `${newTop}px`;
+        // turn on evasive behaviour
+        img.src = 'https://i.ibb.co/fxPYNKk/sad4.png';
+        title.textContent = "Now you can't say No 😏";
+        subtitle.textContent = "Bas YES hi option bacha hai! 💖";
+        enableEvasiveNo();
       }
     });
 
-    // ✅ Yes button event
-    yesBtn.addEventListener('click', () => {
-      questionText.textContent = "Yay! ❤️ You said YES! You made my heart so happy!";
-      gifImage.src = "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif";
-    });
-  </script>
+    // Move the NO button to a random on-screen position
+    function enableEvasiveNo(){
+      evasiveMode = true;
+      noBtn.style.position = 'fixed';
+      // ensure button always stays within viewport
+      const jump = () => {
+        const pad = 12; // margin from edges
+        const bw = noBtn.offsetWidth; const bh = noBtn.offsetHeight;
+        const x = Math.max(pad, Math.random() * (window.innerWidth - bw - pad));
+        const y = Math.max(pad, Math.random() * (window.innerHeight - bh - pad));
+        noBtn.style.left = x + 'px';
+        noBtn.style.top = y + 'px';
+      };
 
+      const runAway = () => requestAnimationFrame(jump);
+      // desktop hover
+      noBtn.addEventListener('mouseover', runAway);
+      // mobile tap: move just before tap lands
+      noBtn.addEventListener('touchstart', (e)=>{ e.preventDefault(); runAway(); }, {passive:false});
+      // also hop every ~1.5s to tease
+      setInterval(jump, 1500);
+      jump();
+    }
+  </script>
 </body>
 </html>
-
