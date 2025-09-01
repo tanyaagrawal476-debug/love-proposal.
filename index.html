@@ -91,23 +91,23 @@
         ];
 
         const funnyGifs = [
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjR2N25yeW52ZW5pZ2EwbGoxM3d0OHVmdWN0aGNuNG0wYm0xY3Z4MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jA8S2M0qH2z6209q/giphy.gif", // Cat staring
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMm11OHpqYW1tY2pvaWhnb2R4OWVvdG9lNDZ2bHlwbTNkZ2Z4Z2F6ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKB3Eo7z1H9VbC0/giphy.gif", // Sad dog
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXB0Zm4yZGRjZ2s2ZXg0anA5cW05b29nbGwwM2o0c2l3d3pvamZ3NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0O9z9v3aC07j7f7M/giphy.gif", // Crying cat
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2J2N3B3cjlncmtyaWFsdXNxaW96N2N6YXlxdnF2ajF4b3RmdzhmMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YqDk2jY62zT8p4I3rI/giphy.gif", // Begging dog
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzJtOGo2MjZna2g4cW5mb2VwaWl0Zzkwb2VkbW5lYXF2b25kOGV5ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oEdv4NlWkY8YQ3dK0/giphy.gif", // Please
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2F3OXl2cG5ocWJuZ3NlOWVsbGFzNGxwa3h3dWF3YXpobGlsb2JvNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKEeT2i7lq3gDmg/giphy.gif" // What are you doing?
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjR2N25yeW52ZW5pZ2EwbGoxM3d0OHVmdWN0aGNuNG0wYm0xY3Z4MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jA8S2M0qH2z6209q/giphy.gif",
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMm11OHpqYW1tY2pvaWhnb2R4OWVvdG9lNDZ2bHlwbTNkZ2Z4Z2F6ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKB3Eo7z1H9VbC0/giphy.gif",
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXB0Zm4yZGRjZ2s2ZXg0anA5cW05b29nbGwwM2o0c2l3d3pvamZ3NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0O9z9v3aC07j7f7M/giphy.gif",
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2J2N3B3cjlncmtyaWFsdXNxaW96N2N6YXlxdnF2ajF4b3RmdzhmMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YqDk2jY62zT8p4I3rI/giphy.gif",
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzJtOGo2MjZna2g4cW5mb2VwaWl0Zzkwb2VkbW5lYXF2b25kOGV5ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oEdv4NlWkY8YQ3dK0/giphy.gif",
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2F3OXl2cG5ocWJuZ3NlOWVsbGFzNGxwa3h3dWF3YXpobGlsb2JvNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKEeT2i7lq3gDmg/giphy.gif"
         ];
 
         noBtn.addEventListener('click', () => {
             noClickCount++;
             
             if (noClickCount <= funnyMessages.length) {
-                // Change message and image but don't move the button
+                // Change message and image but do not move the button
                 questionText.textContent = funnyMessages[noClickCount - 1];
                 gifImage.src = funnyGifs[noClickCount - 1];
             } else {
-                // When all messages are shown, make the button move
+                // After all messages are shown, make the button move randomly
                 noBtn.style.position = 'absolute';
                 const newLeft = Math.random() * (window.innerWidth - 100);
                 const newTop = Math.random() * (window.innerHeight - 100);
@@ -115,18 +115,4 @@
                 noBtn.style.top = `${newTop}px`;
                 
                 questionText.textContent = "Okay, now you have to say YES! There's no escape! 😉";
-                gifImage.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZW9obDBmdzR3aWZ5am4wM29wZHB4dzQ1dTZ5a29obnJxdGZ1cjF4eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/pUpr32uX8wDkX1c8Qz/giphy.gif";
-            }
-        });
-
-        yesBtn.addEventListener('click', () => {
-            questionText.textContent = "Aww, I knew it! I love you too! ❤️";
-            gifImage.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbm04c211ZzB6bWhzM2FhMXVpa3d2eWdwN2VzM2FvNnUzbG84eXRmeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l2SpL9g9z5S2hT5v2/giphy.gif";
-            noBtn.style.display = 'none';
-            yesBtn.style.background = '#d81b60';
-            yesBtn.style.boxShadow = '0 4px #ad1457';
-            yesBtn.style.cursor = 'default';
-        });
-    </script>
-</body>
-</html>
+                gifImage.src = "
