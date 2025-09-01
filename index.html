@@ -59,9 +59,6 @@
     #noBtn {
       background: lightcoral;
     }
-    #noBtn:hover {
-      transform: scale(1.05);
-    }
   </style>
 </head>
 <body>
@@ -79,17 +76,16 @@
     let noCount = 0;
     let noBtn = document.getElementById("noBtn");
 
-    // GIFs list
+    // 🐱 Cute Cat GIFs
     let gifs = [
-      "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif",
-      "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
-      "https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif",
-      "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif",
       "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
-      "https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif"
+      "https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif",
+      "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
+      "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
+      "https://media.giphy.com/media/11s7Ke7jcNxCHS/giphy.gif"
     ];
 
-    // Cute text messages
+    // Messages
     let messages = [
       { text: "Please think again! 🥺", sub: "Itni jaldi nahi bol do 🥲" },
       { text: "Ek aur baar soch lo! 😘", sub: "Kyu aisa kar rahe ho 😭" },
@@ -124,8 +120,9 @@
 
         noCount++;
       } else {
-        // Button runaway
-        noBtn.onmouseover = () => {
+        // 👉 Last stage: NO button tap/click par move kare
+        noBtn.onclick = (e) => {
+          e.preventDefault(); // disable default click
           let x = Math.random() * (window.innerWidth - noBtn.clientWidth - 20);
           let y = Math.random() * (window.innerHeight - noBtn.clientHeight - 20);
           x = Math.max(0, x);
@@ -135,7 +132,7 @@
           noBtn.style.top = `${y}px`;
         };
 
-        document.getElementById("mainImg").src = "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif";
+        document.getElementById("mainImg").src = "https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif";
         document.getElementById("mainText").innerText = "Now you can't say No 😏";
         document.getElementById("subText").innerText = "Bas Yes hi option hai ab! 💖";
       }
