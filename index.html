@@ -1,146 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Do you love me? ❤️</title>
-  <style>
-    :root{
-      --bg:#ffd6e7;
-      --card:#ffffff;
-      --text:#222;
-      --muted:#6b7280;
-      --yes:#b5f5b5;
-      --no:#ffb6c1;
-      --shadow: 0 10px 30px rgba(0,0,0,.15);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;}
-    body{
-      margin:0; display:grid; place-items:center; background:var(--bg);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      color:var(--text); overflow:hidden;
-    }
-    .card{
-      width:min(92vw, 480px); background:var(--card); border-radius:24px; padding:28px 24px 32px;
-      text-align:center; box-shadow:var(--shadow);
-    }
-    .img-wrap{ display:grid; place-items:center; margin-bottom:16px;}
-    img{ width:min(60vw, 220px); border-radius:16px; user-select:none; -webkit-user-drag:none; }
-    h1{ font-size:clamp(20px, 4vw, 28px); margin:6px 0 4px;}
-    p{ margin:0; color:var(--muted)}
-    .actions{ margin-top:18px; display:flex; gap:12px; justify-content:center; position:relative;}
-    button{
-      appearance:none; border:0; padding:12px 20px; border-radius:12px; font-size:16px; cursor:pointer;
-      box-shadow: 0 6px 16px rgba(0,0,0,.12); transition: transform .08s ease, box-shadow .2s ease;
-      position:relative; touch-action:manipulation; user-select:none;
-    }
-    button:active{ transform:translateY(1px); box-shadow: 0 4px 10px rgba(0,0,0,.15) }
-    #yesBtn{ background:var(--yes) }
-    #noBtn{ background:var(--no) }
-    .tiny{font-size:12px; margin-top:8px; color:var(--muted)}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Love Proposal 💖</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fce4ec;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow: hidden; /* Prevent scrollbars from appearing when button moves */
+        }
+        .container {
+            padding: 20px;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #d81b60;
+            font-size: 2.5em;
+        }
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            position: relative;
+        }
+        .btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        #yesBtn {
+            background-color: #4caf50;
+            color: white;
+            box-shadow: 0 4px #2e7d32;
+        }
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+            box-shadow: 0 4px #d32f2f;
+        }
+        .image {
+            margin-top: 20px;
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-  <main class="card">
-    <div class="img-wrap">
-      <img id="mainImg" alt="cute" src="https://i.ibb.co/mS2Zs0L/cute-cat.png" />
+
+    <div class="container" id="proposalBox">
+        <h1 id="questionText">Kya aap mujhse pyaar karte hain? 😍</h1>
+        <img id="gifImage" class="image" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzVyeDJhb29obzNxdzN4Mnk1cTBlZnE0ZWFnN3VnbXoxeDJzNnZmbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kFgzrTt798d2w/giphy.gif" alt="Cute GIF" />
+        <div class="buttons">
+            <button id="yesBtn" class="btn">Haan 😊</button>
+            <button id="noBtn" class="btn">Nahi 💔</button>
+        </div>
     </div>
-    <h1 id="title">Do you love me? 🥰</h1>
-    <p id="subtitle">I am all yours ❤️</p>
+    
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const questionText = document.getElementById('questionText');
+        const gifImage = document.getElementById('gifImage');
+        let noClickCount = 0;
 
-    <div class="actions">
-      <button id="yesBtn" type="button">Yes</button>
-      <button id="noBtn" type="button">No</button>
-    </div>
-    <div class="tiny">Made with ❤ just for you</div>
-  </main>
+        const funnyMessages = [
+            "Ek baar aur soch lo! 🤔",
+            "Are you sure? 😟",
+            "This isn't a game, it's destiny! 💖",
+            "Please, don't break my heart! 😭",
+            "Really? The whole world is watching... 👀",
+            "You're making a big mistake! 😉",
+            "This is your last chance! 🙏"
+        ];
 
-  <script>
-    // Content that shows on successive NO clicks
-    const slides = [
-      {
-        img: "https://i.ibb.co/X53BZQJ/sad1.png",
-        title: "Please think again! 🥺",
-        sub: "Itni jaldi mat bolo… 🥲",
-      },
-      {
-        img: "https://i.ibb.co/zfWs72h/sad2.png",
-        title: "Ek aur baar soch lo! 😘",
-        sub: "Kyu aisa kar rahe ho 😭",
-      },
-      {
-        img: "https://i.ibb.co/D79tWn9/sad3.png",
-        title: "Baby maan jao na! 😍",
-        sub: "Kitna bhav khaogi 😅",
-      },
-    ];
+        const funnyGifs = [
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjR2N25yeW52ZW5pZ2EwbGoxM3d0OHVmdWN0aGNuNG0wYm0xY3Z4MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jA8S2M0qH2z6209q/giphy.gif", // Cat staring
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMm11OHpqYW1tY2pvaWhnb2R4OWVvdG9lNDZ2bHlwbTNkZ2Z4Z2F6ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKB3Eo7z1H9VbC0/giphy.gif", // Sad dog
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXB0Zm4yZGRjZ2s2ZXg0anA5cW05b29nbGwwM2o0c2l3d3pvamZ3NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0O9z9v3aC07j7f7M/giphy.gif", // Crying cat
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2J2N3B3cjlncmtyaWFsdXNxaW96N2N6YXlxdnF2ajF4b3RmdzhmMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YqDk2jY62zT8p4I3rI/giphy.gif", // Begging dog
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzJtOGo2MjZna2g4cW5mb2VwaWl0Zzkwb2VkbW5lYXF2b25kOGV5ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oEdv4NlWkY8YQ3dK0/giphy.gif", // Please
+            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2F3OXl2cG5ocWJuZ3NlOWVsbGFzNGxwa3h3dWF3YXpobGlsb2JvNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKEeT2i7lq3gDmg/giphy.gif" // What are you doing?
+        ];
 
-    // Success screen when YES is clicked
-    const successHTML = `
-      <div class="img-wrap">
-        <img alt="love" src="https://i.ibb.co/6XXmjM0/cute-love.png" />
-      </div>
-      <h1>Yay! I love you too ❤️🥳</h1>
-      <p>Ab toh party banti hai! 🎉</p>
-    `;
+        noBtn.addEventListener('click', () => {
+            noClickCount++;
+            
+            if (noClickCount < funnyMessages.length) {
+                // Change message and image
+                questionText.textContent = funnyMessages[noClickCount - 1];
+                gifImage.src = funnyGifs[noClickCount - 1];
+            } else {
+                // Hide the "No" button or make it move
+                const newLeft = Math.random() * (window.innerWidth - 100);
+                const newTop = Math.random() * (window.innerHeight - 100);
+                noBtn.style.position = 'absolute';
+                noBtn.style.left = `${newLeft}px`;
+                noBtn.style.top = `${newTop}px`;
+                
+                questionText.textContent = "Okay, now you have to say YES! There's no escape! 😉";
+                gifImage.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZW9obDBmdzR3aWZ5am4wM29wZHB4dzQ1dTZ5a29obnJxdGZ1cjF4eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/pUpr32uX8wDkX1c8Qz/giphy.gif";
+            }
+        });
 
-    const main = document.querySelector('main.card');
-    const img = document.getElementById('mainImg');
-    const title = document.getElementById('title');
-    const subtitle = document.getElementById('subtitle');
-    const yesBtn = document.getElementById('yesBtn');
-    const noBtn = document.getElementById('noBtn');
-
-    // Preload images for smooth swaps
-    [...slides.map(s => s.img), 'https://i.ibb.co/6XXmjM0/cute-love.png', 'https://i.ibb.co/fxPYNKk/sad4.png']
-      .forEach(src => { const im = new Image(); im.src = src; });
-
-    let i = 0;
-    let evasiveMode = false; // when true, NO button runs away
-
-    yesBtn.addEventListener('click', () => {
-      main.innerHTML = successHTML;
-    });
-
-    noBtn.addEventListener('click', () => {
-      if (evasiveMode) return; // once running, clicking will be rare; ignore
-      if (i < slides.length) {
-        const s = slides[i++];
-        img.src = s.img; title.textContent = s.title; subtitle.textContent = s.sub;
-      } else {
-        // turn on evasive behaviour
-        img.src = 'https://i.ibb.co/fxPYNKk/sad4.png';
-        title.textContent = "Now you can't say No 😏";
-        subtitle.textContent = "Bas YES hi option bacha hai! 💖";
-        enableEvasiveNo();
-      }
-    });
-
-    // Move the NO button to a random on-screen position
-    function enableEvasiveNo(){
-      evasiveMode = true;
-      noBtn.style.position = 'fixed';
-      // ensure button always stays within viewport
-      const jump = () => {
-        const pad = 12; // margin from edges
-        const bw = noBtn.offsetWidth; const bh = noBtn.offsetHeight;
-        const x = Math.max(pad, Math.random() * (window.innerWidth - bw - pad));
-        const y = Math.max(pad, Math.random() * (window.innerHeight - bh - pad));
-        noBtn.style.left = x + 'px';
-        noBtn.style.top = y + 'px';
-      };
-
-      const runAway = () => requestAnimationFrame(jump);
-      // desktop hover
-      noBtn.addEventListener('mouseover', runAway);
-      // mobile tap: move just before tap lands
-      noBtn.addEventListener('touchstart', (e)=>{ e.preventDefault(); runAway(); }, {passive:false});
-      // also hop every ~1.5s to tease
-      setInterval(jump, 1500);
-      jump();
-    }
-  </script>
+        yesBtn.addEventListener('click', () => {
+            questionText.textContent = "Aww, I knew it! I love you too! ❤️";
+            gifImage.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbm04c211ZzB6bWhzM2FhMXVpa3d2eWdwN2VzM2FvNnUzbG84eXRmeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l2SpL9g9z5S2hT5v2/giphy.gif";
+            noBtn.style.display = 'none'; // Hide the no button
+            yesBtn.style.background = '#d81b60'; // Change color
+            yesBtn.style.boxShadow = '0 4px #ad1457';
+            yesBtn.style.cursor = 'default';
+        });
+    </script>
 </body>
 </html>
-
