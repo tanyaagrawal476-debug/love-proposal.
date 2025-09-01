@@ -1,101 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Love Proposal 💖</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #fce4ec; /* Light pink background */
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            overflow: hidden; /* Prevent scrollbars when button moves */
-        }
-        .container {
-            padding: 20px;
-            border-radius: 15px;
-            background-color: white;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #d81b60; /* Dark pink heading */
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-        .buttons {
-            margin-top: 20px;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            position: relative; /* Essential for 'No' button's absolute positioning */
-        }
-        .btn {
-            padding: 10px 25px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        #yesBtn {
-            background-color: #4caf50; /* Green for Yes */
-            color: white;
-            box-shadow: 0 4px #2e7d32;
-            z-index: 10; /* Ensure Yes button is always clickable */
-        }
-        #noBtn {
-            background-color: #f44336; /* Red for No */
-            color: white;
-            box-shadow: 0 4px #d32f2f;
-            transition: all 0.3s ease; /* Smooth transition for movement */
-            /* Initially static, will become absolute when it starts moving */
-        }
-        .image {
-            margin-top: 20px;
-            width: 250px;
-            height: 250px;
-            object-fit: contain; /* ensures the full image is visible */
-            border-radius: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Do you love me? ❤️</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      background: linear-gradient(135deg, pink, lightyellow);
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      overflow: hidden;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      max-width: 90%;
+      position: relative;
+      z-index: 2;
+    }
+    img {
+      width: 220px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+    h2 {
+      margin: 10px 0;
+      font-weight: 600;
+    }
+    p {
+      margin-bottom: 20px;
+      color: #444;
+    }
+    button {
+      padding: 10px 25px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    #yesBtn {
+      background: lightgreen;
+    }
+    #yesBtn:hover {
+      transform: scale(1.1);
+      background: limegreen;
+      color: white;
+    }
+    #noBtn {
+      background: lightcoral;
+    }
+    #noBtn:hover {
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container" id="proposalBox">
-        <h1 id="questionText">Do you love me? 😍</h1>
-        <img id="gifImage" class="image" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzVyeDJhb29obzNxdzN4Mnk1cTBlZnE0ZWFnN3VnbXoxeDJzNnZmbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kFgzrTt798d2w/giphy.gif" alt="Cute GIF" />
-        <div class="buttons">
-            <button id="yesBtn" class="btn">Yes 😊</button>
-            <button id="noBtn" class="btn">No 💔</button>
+  <div class="container">
+    <img id="mainImg" src="https://i.ibb.co/mS2Zs0L/cute-cat.png" alt="Cute">
+    <h2 id="mainText">Do you love me? 🥰</h2>
+    <p id="subText">I am all yours ❤️</p>
+    <button id="yesBtn" onclick="yesClicked()">Yes</button>
+    <button id="noBtn" onclick="nextNo()">No</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    let noCount = 0;
+    let noBtn = document.getElementById("noBtn");
+
+    // GIFs list
+    let gifs = [
+      "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif",
+      "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
+      "https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif",
+      "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif",
+      "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
+      "https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif"
+    ];
+
+    // Cute text messages
+    let messages = [
+      { text: "Please think again! 🥺", sub: "Itni jaldi nahi bol do 🥲" },
+      { text: "Ek aur baar soch lo! 😘", sub: "Kyu aisa kar rahe ho 😭" },
+      { text: "Baby man jao na! 😍", sub: "Kitna bhav khaogi 😅" },
+      { text: "Abhi bhi time hai! 💕", sub: "Bas Yes bol do 🥰" },
+      { text: "No mat bolo yaar 🐶", sub: "Bubbu-Duddu ro denge 😢" }
+    ];
+
+    function yesClicked() {
+      document.body.innerHTML = `
+        <div class="container">
+          <img src="https://i.ibb.co/6XXmjM0/cute-love.png" alt="Yes">
+          <h2>Yay! I love you too ❤️🥳</h2>
+          <p>Ab toh humesha saath rahenge 💕</p>
         </div>
-    </div>
-    
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const questionText = document.getElementById('questionText');
-        const gifImage = document.getElementById('gifImage');
-        let noClickCount = 0;
-        let isMoving = false; // Flag to check if No button has started moving
+      `;
+      confetti({
+        particleCount: 200,
+        spread: 100,
+        origin: { y: 0.6 }
+      });
+    }
 
-        const funnyMessages = [
-            "Think again! 🤔",
-            "Are you sure? 😟",
-            "This isn't a game, it's destiny! 💖",
-            "Please, don't break my heart! 😭",
-            "Really? The whole world is watching... 👀",
-            "You're making a big mistake! 😉",
-            "This is your last chance! 🙏"
-        ];
+    function nextNo() {
+      if(noCount < 5){
+        let randomGif = gifs[Math.floor(Math.random() * gifs.length)];
+        let randomMsg = messages[Math.floor(Math.random() * messages.length)];
 
-        const funnyGifs = [
-            "https://media.giphy.com/media/efJ3wJ0bV9NqL8tJ3b/giphy.gif", // Cute Cat thinking
-            "https://media.giphy.com/media/3o7TKWjR6wz1M11B0Q/giphy.gif", // Sad Teddy
-            "https://media.giphy.com/media/l0HlPwMAzh13S3RfM/giphy.gif", // Cat asking please
-            "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjU4eWZzNTEwb2IxdjY3aXlwZjQybXZuMTR3cGZld2dseHk2ZzUzNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKBk60l0F150WLS/giphy.gif", // Crying Kitty
-            "
+        document.getElementById("mainImg").src = randomGif;
+        document.getElementById("mainText").innerText = randomMsg.text;
+        document.getElementById("subText").innerText = randomMsg.sub;
+
+        noCount++;
+      } else {
+        // Button runaway
+        noBtn.onmouseover = () => {
+          let x = Math.random() * (window.innerWidth - noBtn.clientWidth - 20);
+          let y = Math.random() * (window.innerHeight - noBtn.clientHeight - 20);
+          x = Math.max(0, x);
+          y = Math.max(0, y);
+          noBtn.style.position = "absolute";
+          noBtn.style.left = `${x}px`;
+          noBtn.style.top = `${y}px`;
+        };
+
+        document.getElementById("mainImg").src = "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif";
+        document.getElementById("mainText").innerText = "Now you can't say No 😏";
+        document.getElementById("subText").innerText = "Bas Yes hi option hai ab! 💖";
+      }
+    }
+  </script>
+</body>
+</html>
+
